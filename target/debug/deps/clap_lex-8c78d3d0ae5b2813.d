@@ -1,0 +1,6 @@
+/run/media/hyper/eclipse/gitprojects/unified/ipv6-only/target/debug/deps/clap_lex-8c78d3d0ae5b2813.d: /home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/lib.rs /home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/ext.rs
+
+/run/media/hyper/eclipse/gitprojects/unified/ipv6-only/target/debug/deps/libclap_lex-8c78d3d0ae5b2813.rmeta: /home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/lib.rs /home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/ext.rs
+
+/home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/lib.rs:
+/home/hyper/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap_lex-0.7.6/src/ext.rs:
