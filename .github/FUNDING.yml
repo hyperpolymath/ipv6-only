@@ -1,25 +1,7 @@
-# Funding configuration for IPv6-Only Tools project
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Funding platforms for hyperpolymath projects
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
 
-github: # GitHub Sponsors
-  - Hyperpolymath
-
-patreon: # Patreon
-
-open_collective: # Open Collective
-
-ko_fi: # Ko-fi
-
-tidelift: # Tidelift
-
-community_bridge: # Community Bridge
-
-liberapay: # Liberapay
-
-issuehunt: # IssueHunt
-
-otechie: # Otechie
-
-lfx_crowdfunding: # LFX Crowdfunding (formerly CommunityBridge)
-
-custom: # Custom URLs
-  - https://buymeacoffee.com/ipv6tools
+github: hyperpolymath
+ko_fi: hyperpolymath
+liberapay: hyperpolymath
