@@ -1,103 +1,79 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# RSR-compliant .gitignore
 
-# Testing
-.pytest_cache/
-.coverage
-.coverage.*
-htmlcov/
-.tox/
-.hypothesis/
-*.cover
-.cache
-nosetests.xml
-coverage.xml
-*.log
-
-# IDEs
-.vscode/
-.idea/
+# OS & Editor
+.DS_Store
+Thumbs.db
 *.swp
 *.swo
 *~
-.project
-.pydevproject
-.settings/
+.idea/
+.vscode/
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Build
+/target/
+/_build/
+/build/
+/dist/
+/out/
 
-# Virtual environments
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+# Dependencies
+/node_modules/
+/vendor/
+/deps/
+/.elixir_ls/
+
+# Rust
+# Cargo.lock  # Keep for binaries
+
+# Elixir
+/cover/
+/doc/
+*.ez
+erl_crash.dump
+
+# Julia
+*.jl.cov
+*.jl.mem
+/Manifest.toml
+
+# ReScript
+/lib/bs/
+/.bsb.lock
+
+# Python (SaltStack only)
+__pycache__/
+*.py[cod]
 .venv/
 
-# Go
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-*.test
-*.out
-go.work
+# Ada/SPARK
+*.ali
+/obj/
+/bin/
 
-# Node
-node_modules/
-npm-debug.log
-yarn-error.log
+# Haskell
+/.stack-work/
+/dist-newstyle/
 
-# Build artifacts
-bin/
-pkg/
-*.o
-*.a
+# Chapel
+*.chpl.tmp.*
 
-# Documentation
-docs/_build/
-site/
-
-# Environment
+# Secrets
 .env
-.env.local
-.env.*.local
+.env.*
+*.pem
+*.key
+secrets/
 
-# Temporary files
+# Test/Coverage
+/coverage/
+htmlcov/
+
+# Logs
+*.log
+/logs/
+
+# Temp
+/tmp/
 *.tmp
 *.bak
-*.swp
-*~
-
-# Docker
-.dockerignore
