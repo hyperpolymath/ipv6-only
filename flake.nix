@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# flake.nix - Nix flake for ipv6-only (RSR compliant: Rust-only)
 {
-  description = "IPv6-Only Tools - Comprehensive IPv6 networking toolkit";
+  description = "IPv6-Only Tools - Comprehensive IPv6 networking toolkit (Rust)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -18,68 +20,36 @@
           inherit system overlays;
         };
 
-        python = pkgs.python311;
-        pythonPackages = python.pkgs;
-
-        # Python dependencies
-        pythonEnv = python.withPackages (ps: with ps; [
-          # Core dependencies (none - uses stdlib)
-
-          # Dev dependencies
-          pytest
-          pytest-cov
-          black
-          flake8
-          mypy
-          pylint
-          isort
-
-          # Optional dependencies
-          click
-          # dnspython (if needed)
-        ]);
-
-        # Go dependencies
-        goEnv = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            go_1_21
-            gopls
-            gotools
-            go-tools
-          ];
+        # Rust toolchain
+        rustToolchain = pkgs.rust-bin.stable.latest.default.override {
+          extensions = [ "rust-src" "rust-analyzer" "rustfmt" "clippy" ];
         };
 
       in
       {
-        # Development shell
+        # Development shell (Rust-focused)
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            # Python
-            pythonEnv
+            # Rust toolchain
+            rustToolchain
+            cargo-audit
+            cargo-outdated
+            cargo-tarpaulin
 
-            # Go
-            go_1_21
-            gopls
-            gotools
-
-            # Deno
+            # Deno (RSR allowed)
             deno
-
-            # Nickel
-            # nickel # Uncomment if available in nixpkgs
 
             # Build tools
             just
             git
 
-            # Container tools
+            # Container tools (nerdctl/podman preferred)
             podman
             buildah
             skopeo
 
             # Documentation
             asciidoctor
-            # asciidoctor-pdf
 
             # Network tools
             iproute2
@@ -91,18 +61,14 @@
             shellcheck
             shfmt
 
-            # Testing
-            nodePackages.prettier
-
             # Other utilities
             jq
             curl
-            wget
           ];
 
           shellHook = ''
-            echo "🌐 IPv6-Only Tools Development Environment"
-            echo "=========================================="
+            echo "IPv6-Only Tools Development Environment"
+            echo "========================================"
             echo ""
             echo "Available commands:"
             echo "  just --list    # Show all automation recipes"
@@ -110,10 +76,8 @@
             echo "  just test      # Run all tests"
             echo "  just build     # Build all components"
             echo ""
-            echo "Languages:"
-            echo "  Python: $(python --version)"
-            echo "  Go: $(go version | cut -d' ' -f3)"
-            echo "  Deno: $(deno --version | head -n1)"
+            echo "Rust: $(rustc --version)"
+            echo "Cargo: $(cargo --version)"
             echo ""
             echo "Tools:"
             echo "  just: $(just --version)"
@@ -121,7 +85,6 @@
             echo ""
 
             # Set up environment
-            export PYTHONPATH="$PWD/src/python:$PYTHONPATH"
             export PATH="$PWD/bin:$PATH"
 
             # IPv6 configuration
@@ -130,209 +93,92 @@
           '';
         };
 
-        # Python package
-        packages.python-ipv6tools = pythonPackages.buildPythonPackage {
+        # Rust package
+        packages.ipv6-only = pkgs.rustPlatform.buildRustPackage {
           pname = "ipv6-only";
           version = "0.1.0";
 
           src = ./.;
 
-          format = "pyproject";
-
-          nativeBuildInputs = with pythonPackages; [
-            setuptools
-            wheel
-            build
-          ];
-
-          propagatedBuildInputs = with pythonPackages; [
-            # No runtime dependencies - uses stdlib
-          ];
-
-          checkInputs = with pythonPackages; [
-            pytest
-            pytest-cov
-          ];
-
-          checkPhase = ''
-            pytest tests/python/
-          '';
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+          };
 
           meta = with pkgs.lib; {
-            description = "Comprehensive IPv6-only networking tools";
-            homepage = "https://github.com/Hyperpolymath/ipv6-only";
-            license = with licenses; [ mit ];
-            maintainers = [ "Hyperpolymath" ];
+            description = "IPv6 address manipulation, subnet calculation, and network planning tools";
+            homepage = "https://github.com/hyperpolymath/ipv6-only";
+            license = with licenses; [ agpl3Plus ];
+            maintainers = [ ];
             platforms = platforms.all;
           };
         };
 
-        # Go tools
-        packages.ipv6-ping = pkgs.buildGoModule {
-          pname = "ipv6-ping";
-          version = "0.1.0";
+        packages.default = self.packages.${system}.ipv6-only;
 
-          src = ./src/go;
-
-          vendorHash = null; # No external dependencies
-
-          subPackages = [ "cmd/ipv6-ping" ];
-
-          meta = with pkgs.lib; {
-            description = "IPv6 ping utility";
-            homepage = "https://github.com/Hyperpolymath/ipv6-only";
-            license = with licenses; [ mit ];
-          };
-        };
-
-        packages.ipv6-scan = pkgs.buildGoModule {
-          pname = "ipv6-scan";
-          version = "0.1.0";
-
-          src = ./src/go;
-
-          vendorHash = null;
-
-          subPackages = [ "cmd/ipv6-scan" ];
-
-          meta = with pkgs.lib; {
-            description = "IPv6 network scanner";
-            homepage = "https://github.com/Hyperpolymath/ipv6-only";
-            license = with licenses; [ mit ];
-          };
-        };
-
-        packages.ipv6-trace = pkgs.buildGoModule {
-          pname = "ipv6-trace";
-          version = "0.1.0";
-
-          src = ./src/go;
-
-          vendorHash = null;
-
-          subPackages = [ "cmd/ipv6-trace" ];
-
-          meta = with pkgs.lib; {
-            description = "IPv6 traceroute utility";
-            homepage = "https://github.com/Hyperpolymath/ipv6-only";
-            license = with licenses; [ mit ];
-          };
-        };
-
-        packages.ipv6-lookup = pkgs.buildGoModule {
-          pname = "ipv6-lookup";
-          version = "0.1.0";
-
-          src = ./src/go;
-
-          vendorHash = null;
-
-          subPackages = [ "cmd/ipv6-lookup" ];
-
-          meta = with pkgs.lib; {
-            description = "IPv6 DNS lookup tool";
-            homepage = "https://github.com/Hyperpolymath/ipv6-only";
-            license = with licenses; [ mit ];
-          };
-        };
-
-        # All Go tools together
-        packages.go-tools = pkgs.symlinkJoin {
-          name = "ipv6-go-tools";
-          paths = with self.packages.${system}; [
-            ipv6-ping
-            ipv6-scan
-            ipv6-trace
-            ipv6-lookup
-          ];
-        };
-
-        # Complete package with everything
-        packages.default = pkgs.symlinkJoin {
-          name = "ipv6-only-tools";
-          paths = with self.packages.${system}; [
-            python-ipv6tools
-            go-tools
-          ];
-        };
-
-        # Container image
+        # Container image using Nix
         packages.container = pkgs.dockerTools.buildLayeredImage {
           name = "ipv6-only";
           tag = "latest";
 
           contents = with pkgs; [
             self.packages.${system}.default
-            python3
-            go
             iproute2
             iputils
             bind
             bashInteractive
             coreutils
+            cacert
           ];
 
           config = {
             Cmd = [ "${pkgs.bashInteractive}/bin/bash" ];
             Env = [
               "PATH=/bin"
-              "PYTHONUNBUFFERED=1"
+              "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
             ];
             WorkingDir = "/app";
             ExposedPorts = {
-              "8000/tcp" = {};
-              "8443/tcp" = {};
+              "8080/tcp" = {};
+            };
+            Labels = {
+              "org.opencontainers.image.source" = "https://github.com/hyperpolymath/ipv6-only";
+              "org.opencontainers.image.licenses" = "AGPL-3.0-or-later";
             };
           };
         };
 
         # Apps for running tools
         apps = {
-          ipv6-ping = {
+          ipv6 = {
             type = "app";
-            program = "${self.packages.${system}.ipv6-ping}/bin/ipv6-ping";
+            program = "${self.packages.${system}.default}/bin/ipv6";
           };
-          ipv6-scan = {
-            type = "app";
-            program = "${self.packages.${system}.ipv6-scan}/bin/ipv6-scan";
-          };
-          ipv6-trace = {
-            type = "app";
-            program = "${self.packages.${system}.ipv6-trace}/bin/ipv6-trace";
-          };
-          ipv6-lookup = {
-            type = "app";
-            program = "${self.packages.${system}.ipv6-lookup}/bin/ipv6-lookup";
-          };
+          default = self.apps.${system}.ipv6;
         };
 
         # Checks (tests)
         checks = {
-          python-tests = pkgs.runCommand "python-tests" {
-            buildInputs = [ pythonEnv ];
+          rust-tests = pkgs.runCommand "rust-tests" {
+            buildInputs = [ rustToolchain ];
           } ''
             cd ${./.}
-            export PYTHONPATH="${./.}/src/python"
-            pytest tests/python/ -v
-            touch $out
-          '';
-
-          go-tests = pkgs.runCommand "go-tests" {
-            buildInputs = [ pkgs.go_1_21 ];
-          } ''
-            cd ${./.}/src/go
-            go test -v ./...
+            cargo test --all-features
             touch $out
           '';
 
           format-check = pkgs.runCommand "format-check" {
-            buildInputs = [ pythonEnv pkgs.go_1_21 ];
+            buildInputs = [ rustToolchain ];
           } ''
             cd ${./.}
-            # Python formatting check
-            black --check src/python/ipv6tools/ || true
-            # Go formatting check
-            cd src/go && gofmt -l . | grep -q . && exit 1 || exit 0
+            cargo fmt --all -- --check
+            touch $out
+          '';
+
+          clippy-check = pkgs.runCommand "clippy-check" {
+            buildInputs = [ rustToolchain ];
+          } ''
+            cd ${./.}
+            cargo clippy --all-targets --all-features -- -D warnings
             touch $out
           '';
         };

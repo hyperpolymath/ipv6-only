@@ -1,60 +1,67 @@
-FROM python:3.11-slim
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Containerfile for ipv6-only tools
+# Base: Wolfi (cgr.dev/chainguard/wolfi-base)
+# RSR Compliant: Rust-only implementation
 
-LABEL maintainer="IPv6-Only Project"
+# Build stage for Rust binaries
+FROM cgr.dev/chainguard/wolfi-base:latest AS builder
+
+# Install Rust and build dependencies
+RUN apk add --no-cache \
+    rust \
+    cargo \
+    build-base
+
+WORKDIR /build
+
+# Copy Rust project files
+COPY Cargo.toml Cargo.lock ./
+COPY crates/ ./crates/
+COPY src/ ./src/
+
+# Build release binaries
+RUN cargo build --release
+
+# Runtime stage - minimal distroless-like image
+FROM cgr.dev/chainguard/wolfi-base:latest
+
+LABEL maintainer="Jonathan D.A. Jewell <jonathan@hyperpolymath.org>"
 LABEL description="IPv6-only networking tools and utilities"
 
-# Install system dependencies
-RUN apt-get update && apk add --no-cache -y \
+# Install runtime network tools
+RUN apk add --no-cache \
     iproute2 \
-    iputils-ping \
-    traceroute \
-    dnsutils \
+    iputils \
+    bind-tools \
     tcpdump \
-    net-tools \
     curl \
-    wget \
-    git \
-    golang-go \
-    && rm -rf /var/lib/apt/lists/*
+    ca-certificates \
+    bash
+
+# Copy Rust binaries from builder
+COPY --from=builder /build/target/release/ipv6 /usr/local/bin/
+
+# Copy shell scripts
+COPY src/scripts/*.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/*.sh
 
 # Set working directory
 WORKDIR /app
-
-# Copy Python package
-COPY setup.py requirements.txt README.md CLAUDE.md ./
-COPY src/ ./src/
-COPY tests/ ./tests/
-
-# Install Python package
-RUN pip install --no-cache-dir -e ".[dev]"
-
-# Build Go tools
-WORKDIR /app/src/go
-RUN go build -o /usr/local/bin/ipv6-ping ./cmd/ipv6-ping && \
-    go build -o /usr/local/bin/ipv6-scan ./cmd/ipv6-scan
-
-# Copy scripts and make executable
-WORKDIR /app
-RUN cp src/scripts/*.sh /usr/local/bin/ && \
-    chmod +x /usr/local/bin/*.sh
-
-# Enable IPv6 in container
-RUN echo "net.ipv6.conf.all.disable_ipv6 = 0" >> /etc/sysctl.conf && \
-    echo "net.ipv6.conf.default.disable_ipv6 = 0" >> /etc/sysctl.conf
 
 # Create directories for data
 RUN mkdir -p /data /config
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1
 ENV PATH="/usr/local/bin:${PATH}"
+ENV IPV6_TOOLS_CONFIG="/config/ipv6-tools.ncl"
+ENV IPV6_TOOLS_DATA="/data"
 
 # Default command
 CMD ["/bin/bash"]
 
-# Health check
+# Health check using Rust binary
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD python -c "import ipv6tools; print('OK')" || exit 1
+    CMD ipv6 validate ::1 || exit 1
 
 # Expose web interface (if serving)
 EXPOSE 8080
@@ -62,8 +69,9 @@ EXPOSE 8080
 # Volume for persistent data
 VOLUME ["/data", "/config"]
 
-# Labels for metadata
+# Labels for metadata (OCI standard)
 LABEL version="0.1.0"
-LABEL org.opencontainers.image.source="https://github.com/Hyperpolymath/ipv6-only"
-LABEL org.opencontainers.image.description="Comprehensive IPv6-only networking tools"
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.source="https://github.com/hyperpolymath/ipv6-only"
+LABEL org.opencontainers.image.description="Comprehensive IPv6-only networking tools (Rust)"
+LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
+LABEL org.opencontainers.image.vendor="hyperpolymath"
