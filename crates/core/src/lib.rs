@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! Core IPv6 types for ipv6-only
 //!
 //! Provides IPv6Address and IPv6Network types with full address manipulation.

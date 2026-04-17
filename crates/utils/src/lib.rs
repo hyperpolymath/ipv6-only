@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! IPv6 utility functions for address manipulation and generation.
 
 use ipv6_only_core::{IPv6Address, IPv6Network, Ipv6Error, Result};

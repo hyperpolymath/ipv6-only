@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! ipv6-only CLI
 //!
 //! IPv6 address manipulation, subnet calculation, and network planning tools.
