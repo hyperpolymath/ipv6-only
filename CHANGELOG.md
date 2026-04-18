@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hurricane Electric tunnel integration (4 scripts)
 - Deno web server (server.ts) with API endpoints
 - Go CLI tools: ipv6-trace and ipv6-lookup
-- AsciiDoc justfile cookbook documentation
+- AsciiDoc Justfile cookbook documentation
 - RSR compliance: CODE_OF_CONDUCT.md, MAINTAINERS.md, CHANGELOG.md
 - .well-known/ directory with security.txt, ai.txt, humans.txt
 - TPCF documentation for tri-perimeter contribution framework
@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Renamed LICENSE to licence.txt
-- Expanded justfile recipes from basic to comprehensive automation
+- Expanded Justfile recipes from basic to comprehensive automation
 - Enhanced security.md with RSR compliance requirements
 - Updated CONTRIBUTING.md with RSR standards
 
