@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 //! Core IPv6 types for ipv6-only
 //!
 //! Provides IPv6Address and IPv6Network types with full address manipulation.

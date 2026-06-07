@@ -16,6 +16,7 @@ permissions: read-all
 jobs:
   antipattern-check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
