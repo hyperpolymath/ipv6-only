@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 # Containerfile for ipv6-only tools
 # Base: Wolfi (cgr.dev/chainguard/wolfi-base)
 # RSR Compliant: Rust-only implementation
