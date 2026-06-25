@@ -1,44 +1,58 @@
-// SPDX-License-Identifier: CC-BY-SA-4.0
-// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-= IPv6-Only Tools
-image:https://img.shields.io/badge/OpenSSF-Best_Practices-green?logo=openssourcesecurity[OpenSSF Best Practices,link="https://www.bestpractices.dev/en/projects/new?repo_url=https://github.com/hyperpolymath/ipv6-only"]
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+SPDX-FileCopyrightText: 2025-2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+-->
 
+A comprehensive toolkit for IPv6-only networking, featuring utilities
+for address manipulation, network analysis, diagnostics, and testing.
 
-A comprehensive toolkit for IPv6-only networking, featuring utilities for address manipulation, network analysis, diagnostics, and testing.
+# 🌟 Features
 
-== 🌟 Features
+## Python Library
 
-=== Python Library
-- *IPv6 Address Manipulation*: Validation, compression, expansion, and format conversion
-- *Network Calculator*: Subnet planning, CIDR calculations, and network analysis
-- *Address Generation*: Link-local, ULA, random addresses, and MAC-to-IPv6 (EUI-64)
-- *Utilities*: Reverse DNS, subnet masks, address type detection
+- **IPv6 Address Manipulation**: Validation, compression, expansion, and
+  format conversion
 
-=== Command-Line Tools
+- **Network Calculator**: Subnet planning, CIDR calculations, and
+  network analysis
+
+- **Address Generation**: Link-local, ULA, random addresses, and
+  MAC-to-IPv6 (EUI-64)
+
+- **Utilities**: Reverse DNS, subnet masks, address type detection
+
+## Command-Line Tools
+
 - `ipv6-calc` - Network subnet calculator
-- `ipv6-validate` - Address and network validator
-- `ipv6-gen` - Address generator (link-local, ULA, random, from MAC)
-- `ipv6-convert` - Format converter (compress, expand, binary, hex, reverse DNS)
 
-=== Shell Scripts
+- `ipv6-validate` - Address and network validator
+
+- `ipv6-gen` - Address generator (link-local, ULA, random, from MAC)
+
+- `ipv6-convert` - Format converter (compress, expand, binary, hex,
+  reverse DNS)
+
+## Shell Scripts
+
 - `ipv6-diag.sh` - Comprehensive IPv6 diagnostics tool
+
 - `ipv6-config.sh` - IPv6 configuration helper
 
-=== Web Application
-Modern, responsive web interface featuring:
-- Address validator with type detection
-- Network calculator with CIDR analysis
-- Format converter
-- Address generator
-- Subnet planner
+## Web Application
 
-=== Go Tools
+Modern, responsive web interface featuring: - Address validator with
+type detection - Network calculator with CIDR analysis - Format
+converter - Address generator - Subnet planner
+
+## Go Tools
+
 - `ipv6-ping` - High-performance IPv6 ping utility
+
 - `ipv6-scan` - Fast IPv6 network scanner
 
-== 📦 Installation
+# 📦 Installation
 
-=== Python Package
+## Python Package
 
 ```bash
 = Clone the repository
@@ -52,7 +66,7 @@ pip install -e .
 pip install -e ".[dev]"
 ```
 
-=== Go Tools
+## Go Tools
 
 ```bash
 cd src/go
@@ -64,7 +78,7 @@ go build -o ../../bin/ipv6-ping ./cmd/ipv6-ping
 go build -o ../../bin/ipv6-scan ./cmd/ipv6-scan
 ```
 
-=== Shell Scripts
+## Shell Scripts
 
 ```bash
 = Scripts are in src/scripts/
@@ -75,9 +89,9 @@ chmod +x src/scripts/*.sh
 ./src/scripts/ipv6-diag.sh
 ```
 
-== 🚀 Quick Start
+# 🚀 Quick Start
 
-=== Python Library
+## Python Library
 
 ```python
 from ipv6tools import IPv6Address, IPv6Network, IPv6SubnetCalculator
@@ -99,7 +113,7 @@ for subnet in subnets:
     print(subnet.network)
 ```
 
-=== Command-Line Tools
+## Command-Line Tools
 
 ```bash
 = Validate an address
@@ -121,7 +135,7 @@ ipv6-gen from-mac 00:11:22:33:44:55
 ipv6-convert 2001:0db8:0000:0000:0000:0000:0000:0001 --compress
 ```
 
-=== Shell Scripts
+## Shell Scripts
 
 ```bash
 = Run diagnostics
@@ -140,7 +154,7 @@ sudo ./src/scripts/ipv6-config.sh enable-privacy
 sudo ./src/scripts/ipv6-config.sh static eth0 2001:db8::10 64
 ```
 
-=== Go Tools
+## Go Tools
 
 ```bash
 = Ping an IPv6 address
@@ -153,25 +167,26 @@ sudo ./src/scripts/ipv6-config.sh static eth0 2001:db8::10 64
 ./bin/ipv6-scan -n 2001:db8::/64 -w 200 -v
 ```
 
-=== Web Application
+## Web Application
 
-Simply open `src/web/index.html` in your browser. All tools run locally with no server required.
+Simply open `src/web/index.html` in your browser. All tools run locally
+with no server required.
 
-== 📚 Documentation
+# 📚 Documentation
 
-=== Address Types
+## Address Types
 
-The library recognizes these IPv6 address types:
-- *Loopback* (`::1`) - Local loopback
-- *Unspecified* (`::`) - Unspecified address
-- *Link-Local* (`fe80::/10`) - Local network communication
-- *Unique Local* (`fc00::/7`) - Private addresses
-- *Multicast* (`ff00::/8`) - Group communication
-- *Global Unicast* (`2000::/3`) - Public routable addresses
+The library recognizes these IPv6 address types: - **Loopback**
+(`::1`) - Local loopback - **Unspecified** (`::`) - Unspecified
+address - **Link-Local** (`fe80::/10`) - Local network communication -
+**Unique Local** (`fc00::/7`) - Private addresses - **Multicast**
+(`ff00::/8`) - Group communication - **Global Unicast** (`2000::/3`) -
+Public routable addresses
 
-=== Network Operations
+## Network Operations
 
-==== Subnet Division
+### Subnet Division
+
 ```python
 calc = IPv6SubnetCalculator("2001:db8::/32")
 
@@ -182,22 +197,25 @@ subnets = calc.divide_into_subnets(4)
 subnets = calc.divide_by_prefix(34)
 ```
 
-==== Supernet Calculation
+### Supernet Calculation
+
 ```python
 calc = IPv6SubnetCalculator("2001:db8::/32")
 supernet = calc.get_supernet(24)
 ```
 
-==== Address Testing
+### Address Testing
+
 ```python
 net = IPv6Network("2001:db8::/32")
 print(net.contains("2001:db8::1"))  # True
 print(net.overlaps(IPv6Network("2001:db8:1::/48")))  # True
 ```
 
-=== Address Generation
+## Address Generation
 
-==== Link-Local Addresses
+### Link-Local Addresses
+
 ```python
 from ipv6tools.utils import generate_link_local
 
@@ -208,7 +226,8 @@ addr = generate_link_local()
 addr = generate_link_local("0000000000000001")
 ```
 
-==== Unique Local Addresses (ULA)
+### Unique Local Addresses (ULA)
+
 ```python
 from ipv6tools.utils import generate_unique_local
 
@@ -223,7 +242,8 @@ addr = generate_unique_local(
 )
 ```
 
-==== MAC to IPv6 (EUI-64)
+### MAC to IPv6 (EUI-64)
+
 ```python
 from ipv6tools.utils import mac_to_ipv6_link_local
 
@@ -231,9 +251,9 @@ addr = mac_to_ipv6_link_local("00:11:22:33:44:55")
 = Returns: fe80::211:22ff:fe33:4455
 ```
 
-== 🧪 Testing
+# 🧪 Testing
 
-=== Run Python Tests
+## Run Python Tests
 
 ```bash
 = Install test dependencies
@@ -249,16 +269,14 @@ pytest --cov=ipv6tools tests/
 pytest tests/python/test_address.py -v
 ```
 
-=== Test Web Tools
+## Test Web Tools
 
-Open `src/web/index.html` in a browser and test each tab:
-1. Validator - Try various IPv6 addresses
-2. Calculator - Calculate network information
-3. Converter - Convert between formats
-4. Generator - Generate different address types
-5. Subnet Planner - Plan subnet allocations
+Open `src/web/index.html` in a browser and test each tab: 1. Validator -
+Try various IPv6 addresses 2. Calculator - Calculate network information
+3. Converter - Convert between formats 4. Generator - Generate different
+address types 5. Subnet Planner - Plan subnet allocations
 
-== 🐳 Docker
+# 🐳 Docker
 
 Build and run in Docker:
 
@@ -273,9 +291,9 @@ docker run -it --rm ipv6-only
 docker run --rm ipv6-only ipv6-validate 2001:db8::1
 ```
 
-== 🔧 Development
+# 🔧 Development
 
-=== Setup Development Environment
+## Setup Development Environment
 
 ```bash
 = Clone repository
@@ -295,77 +313,89 @@ black src/python/ipv6tools/
 flake8 src/python/ipv6tools/
 ```
 
-=== Project Structure
+## Project Structure
 
-```
-ipv6-only/
-├── src/
-│   ├── python/          # Python library
-│   │   └── ipv6tools/   # Main package
-│   ├── go/              # Go tools
-│   │   └── cmd/         # Command-line tools
-│   ├── web/             # Web application
-│   └── scripts/         # Shell scripts
-├── tests/               # Test suites
-│   ├── python/          # Python tests
-│   └── go/              # Go tests
-├── docs/                # Documentation
-├── examples/            # Usage examples
-└── docker/              # Docker configurations
-```
+    ipv6-only/
+    ├── src/
+    │   ├── python/          # Python library
+    │   │   └── ipv6tools/   # Main package
+    │   ├── go/              # Go tools
+    │   │   └── cmd/         # Command-line tools
+    │   ├── web/             # Web application
+    │   └── scripts/         # Shell scripts
+    ├── tests/               # Test suites
+    │   ├── python/          # Python tests
+    │   └── go/              # Go tests
+    ├── docs/                # Documentation
+    ├── examples/            # Usage examples
+    └── docker/              # Docker configurations
 
-== 🤝 Contributing
+# 🤝 Contributing
 
 Contributions are welcome! Please:
 
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+1.  Fork the repository
 
-== 📝 License
+2.  Create a feature branch
+
+3.  Add tests for new functionality
+
+4.  Ensure all tests pass
+
+5.  Submit a pull request
+
+# 📝 License
 
 MIT License - see LICENSE file for details
 
-== 🔗 Resources
+# 🔗 Resources
 
-=== RFCs
-- [RFC 8200](https://tools.ietf.org/html/rfc8200) - IPv6 Specification
-- [RFC 4291](https://tools.ietf.org/html/rfc4291) - IPv6 Addressing Architecture
-- [RFC 4862](https://tools.ietf.org/html/rfc4862) - IPv6 Stateless Address Autoconfiguration
-- [RFC 4443](https://tools.ietf.org/html/rfc4443) - ICMPv6
+## RFCs
 
-=== Tools
+- \[RFC 8200\](<https://tools.ietf.org/html/rfc8200>) - IPv6
+  Specification
+
+- \[RFC 4291\](<https://tools.ietf.org/html/rfc4291>) - IPv6 Addressing
+  Architecture
+
+- \[RFC 4862\](<https://tools.ietf.org/html/rfc4862>) - IPv6 Stateless
+  Address Autoconfiguration
+
+- \[RFC 4443\](<https://tools.ietf.org/html/rfc4443>) - ICMPv6
+
+## Tools
+
 - `iproute2` - Modern Linux networking tools
+
 - `nmap` - Network scanning with IPv6 support
+
 - `wireshark` - Packet analysis
 
-== 📊 Examples
+# 📊 Examples
 
-See the `examples/` directory for:
-- Network planning scripts
-- Address management examples
-- Integration examples
-- Testing scenarios
+See the `examples/` directory for: - Network planning scripts - Address
+management examples - Integration examples - Testing scenarios
 
-== ⚡ Performance
+# ⚡ Performance
 
-The Go tools are optimized for performance:
-- `ipv6-ping`: Concurrent pinging with configurable workers
-- `ipv6-scan`: Fast network scanning with worker pools
+The Go tools are optimized for performance: - `ipv6-ping`: Concurrent
+pinging with configurable workers - `ipv6-scan`: Fast network scanning
+with worker pools
 
-Python library uses pure Python with no external dependencies for core functionality.
+Python library uses pure Python with no external dependencies for core
+functionality.
 
-== 🛡️ Security
+# 🛡️ Security
 
-When using security scanning tools:
-- Only scan networks you own or have permission to scan
-- Be aware of rate limiting and network policies
-- Use responsibly for authorized testing only
+When using security scanning tools: - Only scan networks you own or have
+permission to scan - Be aware of rate limiting and network policies -
+Use responsibly for authorized testing only
 
-== 💬 Support
+# 💬 Support
 
-- Report issues on [GitHub Issues](https://github.com/Hyperpolymath/ipv6-only/issues)
+- Report issues on \[GitHub
+  Issues\](<https://github.com/Hyperpolymath/ipv6-only/issues>)
+
 - Check documentation in the `docs/` directory
+
 - See examples in `examples/` directory
