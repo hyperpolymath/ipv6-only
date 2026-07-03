@@ -47,7 +47,7 @@
      (dependency-scanning . "Dependabot + OSSF Scorecard")
      (credentials . "Environment variables only, never committed")
      (input-validation . "Whitelist + schema validation at boundaries")
-     (license-compliance . "AGPL-3.0-or-later"))
+     (license-compliance . "MPL-2.0"))
 
     (testing
      (framework . "language-native")
@@ -84,11 +84,12 @@
       compliance, and multi-platform CI/CD. This creates a unified
       approach to quality across all repositories.")
 
-    (why-agpl
-     "AGPL-3.0-or-later chosen to ensure derivative works remain open
-      source while allowing integration with MIT/BSD libraries. The
-      copyleft provision protects community contributions and ensures
-      improvements flow back to the ecosystem.")
+    (why-mpl
+     "MPL-2.0 chosen for file-level copyleft: modifications to covered files
+      stay open while the code integrates into larger works under other
+      licences. This matches the hyperpolymath estate default and its
+      'never AGPL' policy; the project is dual-offered as
+      MPL-2.0 OR LicenseRef-Palimpsest-0.5.")
 
     (why-polyglot
      "Language selection based on domain fit: Rust for performance-critical

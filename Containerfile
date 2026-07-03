@@ -75,5 +75,5 @@ VOLUME ["/data", "/config"]
 LABEL version="0.1.0"
 LABEL org.opencontainers.image.source="https://github.com/hyperpolymath/ipv6-only"
 LABEL org.opencontainers.image.description="Comprehensive IPv6-only networking tools (Rust)"
-LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
+LABEL org.opencontainers.image.licenses="MPL-2.0"
 LABEL org.opencontainers.image.vendor="hyperpolymath"
