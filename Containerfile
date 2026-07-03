@@ -6,10 +6,12 @@
 # Build stage for Rust binaries
 FROM cgr.dev/chainguard/wolfi-base:latest AS builder
 
-# Install Rust and build dependencies
+# Install Rust and build dependencies. On the Chainguard wolfi apk repo the
+# `cargo` binary ships inside the `rust` package (there is no standalone
+# `cargo` package — `apk add cargo` fails with "no such package"), so it is
+# not listed separately here.
 RUN apk add --no-cache \
     rust \
-    cargo \
     build-base
 
 WORKDIR /build

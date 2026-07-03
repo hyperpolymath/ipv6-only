@@ -5,7 +5,7 @@ Hash: SHA256
 
 Contact: security@ipv6-only.example.com
 Contact: https://github.com/Hyperpolymath/ipv6-only/security/advisories/new
-Expires: 2025-12-31T23:59:59.000Z
+Expires: 2027-07-03T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://raw.githubusercontent.com/Hyperpolymath/ipv6-only/main/.well-known/security.txt
 Policy: https://github.com/Hyperpolymath/ipv6-only/blob/main/security.md

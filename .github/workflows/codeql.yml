@@ -5,6 +5,13 @@ name: CodeQL Security Analysis
 on:
   workflow_dispatch:  # Manual trigger only
 
+# Least-privilege permissions: satisfies the workflow-linter's top-level
+# `permissions:` requirement AND SonarQube githubactions:S8234, which flags
+# the broad `read-all`. This workflow's only job is a disabled placeholder,
+# so read access to repository contents is more than sufficient.
+permissions:
+  contents: read
+
 # Estate guardrail: cancel superseded runs so re-pushes / rebased PR
 # updates do not pile up queued runs against the shared account-wide
 # Actions concurrency pool. Applied only to read-only check workflows
