@@ -12,7 +12,7 @@
   title = {ipv6-only},
   year = {2025},
   url = {https://github.com/hyperpolymath/ipv6-only},
-  license = {AGPL-3.0-or-later}
+  license = {MPL-2.0}
 }
 ----
 
