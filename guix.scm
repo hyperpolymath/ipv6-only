@@ -1,25 +1,28 @@
-;; ipv6-only - Guix Package Definition
-;; Run: guix shell -D -f guix.scm
+;; SPDX-License-Identifier: MPL-2.0
+;; Guix development environment.
+;; Usage: guix shell -D -f guix.scm
 
 (use-modules (guix packages)
-             (guix gexp)
-             (guix git-download)
-             (guix build-system cargo)
-             ((guix licenses) #:prefix license:)
-             (gnu packages base))
+             (guix build-system gnu)
+             (guix licenses)
+             (gnu packages base)
+             (gnu packages bash)
+             (gnu packages base)
+             (gnu packages java)
+             (gnu packages rust)
+             (gnu packages cmake)
+             (gnu packages zig)
+             (gnu packages golang)
+             (gnu packages node)
+             (gnu packages python))
 
-(define-public ipv6_only
-  (package
-    (name "ipv6-only")
-    (version "0.1.0")
-    (source (local-file "." "ipv6-only-checkout"
-                        #:recursive? #t
-                        #:select? (git-predicate ".")))
-    (build-system cargo-build-system)
-    (synopsis "Rust application")
-    (description "Rust application - part of the RSR ecosystem.")
-    (home-page "https://github.com/hyperpolymath/ipv6-only")
-    (license license:agpl3+)))
-
-;; Return package for guix shell
-ipv6_only
+(package
+  (name "ipv6-only")
+  (version "0.1.0")
+  (source #f)
+  (build-system gnu-build-system)
+  (inputs (list coreutils bash  make openjdk rust cmake zig go node python))
+  (synopsis "ipv6-only")
+  (description "ipv6-only — part of the hyperpolymath ecosystem.")
+  (home-page "https://github.com/hyperpolymath/ipv6-only")
+  (license ((@@ (guix licenses) license) "MPL-2.0" "https://github.com/hyperpolymath/palimpsest-license")))
