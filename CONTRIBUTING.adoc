@@ -1,39 +1,37 @@
-<!--
-SPDX-License-Identifier: CC-BY-SA-4.0
-Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
--->
-# Contributing to IPv6-Only Tools
+== Contributing to IPv6-Only Tools
 
-Thank you for your interest in contributing to the IPv6-Only project! This document provides guidelines for contributing.
+Thank you for your interest in contributing to the IPv6-Only project!
+This document provides guidelines for contributing.
 
-## Table of Contents
+=== Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [Development Setup](#development-setup)
-- [Making Changes](#making-changes)
-- [Testing](#testing)
-- [Submitting Changes](#submitting-changes)
-- [Coding Standards](#coding-standards)
+* link:#code-of-conduct[Code of Conduct]
+* link:#getting-started[Getting Started]
+* link:#development-setup[Development Setup]
+* link:#making-changes[Making Changes]
+* link:#testing[Testing]
+* link:#submitting-changes[Submitting Changes]
+* link:#coding-standards[Coding Standards]
 
-## Code of Conduct
+=== Code of Conduct
 
-- Be respectful and inclusive
-- Focus on constructive feedback
-- Help others learn and grow
-- Follow professional standards
+* Be respectful and inclusive
+* Focus on constructive feedback
+* Help others learn and grow
+* Follow professional standards
 
-## Getting Started
+=== Getting Started
 
-### Prerequisites
+==== Prerequisites
 
-- Python 3.8 or higher
-- Go 1.20 or higher (for Go tools)
-- Git
+* Python 3.8 or higher
+* Go 1.20 or higher (for Go tools)
+* Git
 
-### Fork and Clone
+==== Fork and Clone
 
-```bash
+[source,bash]
+----
 # Fork the repository on GitHub
 # Then clone your fork
 git clone https://github.com/YOUR_USERNAME/ipv6-only.git
@@ -41,13 +39,14 @@ cd ipv6-only
 
 # Add upstream remote
 git remote add upstream https://github.com/Hyperpolymath/ipv6-only.git
-```
+----
 
-## Development Setup
+=== Development Setup
 
-### Python Development
+==== Python Development
 
-```bash
+[source,bash]
+----
 # Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -57,11 +56,12 @@ pip install -e ".[dev]"
 
 # Verify installation
 pytest tests/
-```
+----
 
-### Go Development
+==== Go Development
 
-```bash
+[source,bash]
+----
 cd src/go
 
 # Install dependencies
@@ -73,25 +73,25 @@ go build ./cmd/ipv6-scan
 
 # Run tests
 go test ./...
-```
+----
 
-## Making Changes
+=== Making Changes
 
-### Branch Naming
+==== Branch Naming
 
 Use descriptive branch names:
 
-- `feature/add-ipv6-tool` - New features
-- `fix/validation-bug` - Bug fixes
-- `docs/update-readme` - Documentation updates
-- `refactor/optimize-subnet` - Refactoring
-- `test/add-dns-tests` - Test additions
+* `+feature/add-ipv6-tool+` - New features
+* `+fix/validation-bug+` - Bug fixes
+* `+docs/update-readme+` - Documentation updates
+* `+refactor/optimize-subnet+` - Refactoring
+* `+test/add-dns-tests+` - Test additions
 
-### Commit Messages
+==== Commit Messages
 
 Follow conventional commits:
 
-```
+....
 type(scope): short description
 
 Longer description if needed.
@@ -100,21 +100,16 @@ Longer description if needed.
 - Multiple lines OK
 
 Fixes #123
-```
+....
 
-Types:
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation
-- `test`: Tests
-- `refactor`: Code refactoring
-- `perf`: Performance improvement
-- `style`: Code style/formatting
-- `chore`: Maintenance
+Types: - `+feat+`: New feature - `+fix+`: Bug fix - `+docs+`:
+Documentation - `+test+`: Tests - `+refactor+`: Code refactoring -
+`+perf+`: Performance improvement - `+style+`: Code style/formatting -
+`+chore+`: Maintenance
 
 Examples:
 
-```
+....
 feat(dns): add AAAA record batch lookup
 
 Implement batch DNS lookup functionality for multiple hostnames.
@@ -125,22 +120,23 @@ Includes error handling and timeout support.
 - Update documentation
 
 Closes #45
-```
+....
 
-```
+....
 fix(validator): handle zone IDs correctly
 
 Zone IDs were not being validated properly for link-local addresses.
 Now validates both address and zone ID format.
 
 Fixes #67
-```
+....
 
-## Testing
+=== Testing
 
-### Python Tests
+==== Python Tests
 
-```bash
+[source,bash]
+----
 # Run all tests
 pytest
 
@@ -152,13 +148,14 @@ pytest tests/python/test_address.py
 
 # Run specific test
 pytest tests/python/test_address.py::TestIPv6Address::test_valid_address
-```
+----
 
-### Writing Tests
+==== Writing Tests
 
 Always add tests for new features:
 
-```python
+[source,python]
+----
 def test_new_feature():
     """Test description."""
     # Arrange
@@ -169,64 +166,71 @@ def test_new_feature():
 
     # Assert
     assert result == expected_value
-```
+----
 
-### Test Coverage
+==== Test Coverage
 
-Aim for:
-- Core functionality: 95%+ coverage
-- Utilities: 90%+ coverage
+Aim for: - Core functionality: 95%+ coverage - Utilities: 90%+ coverage
 - CLI tools: 80%+ coverage
 
-## Submitting Changes
+=== Submitting Changes
 
-### Before Submitting
+==== Before Submitting
 
-1. **Update documentation** if needed
-2. **Add tests** for new functionality
-3. **Run all tests** and ensure they pass
-4. **Check code style**:
-   ```bash
-   # Python
-   black src/python/ipv6tools/
-   flake8 src/python/ipv6tools/
+[arabic]
+. *Update documentation* if needed
+. *Add tests* for new functionality
+. *Run all tests* and ensure they pass
+. *Check code style*:
++
+[source,bash]
+----
+# Python
+black src/python/ipv6tools/
+flake8 src/python/ipv6tools/
 
-   # Go
-   gofmt -w src/go/
-   go vet ./...
-   ```
-5. **Update CHANGELOG** if applicable
+# Go
+gofmt -w src/go/
+go vet ./...
+----
+. *Update CHANGELOG* if applicable
 
-### Pull Request Process
+==== Pull Request Process
 
-1. **Update your fork**:
-   ```bash
-   git fetch upstream
-   git checkout main
-   git merge upstream/main
-   ```
+[arabic]
+. *Update your fork*:
++
+[source,bash]
+----
+git fetch upstream
+git checkout main
+git merge upstream/main
+----
+. *Create feature branch*:
++
+[source,bash]
+----
+git checkout -b feature/my-feature
+----
+. *Make changes and commit*:
++
+[source,bash]
+----
+git add .
+git commit -m "feat(scope): description"
+----
+. *Push to your fork*:
++
+[source,bash]
+----
+git push origin feature/my-feature
+----
+. *Create Pull Request* on GitHub
 
-2. **Create feature branch**:
-   ```bash
-   git checkout -b feature/my-feature
-   ```
+==== Pull Request Template
 
-3. **Make changes and commit**:
-   ```bash
-   git add .
-   git commit -m "feat(scope): description"
-   ```
-
-4. **Push to your fork**:
-   ```bash
-   git push origin feature/my-feature
-   ```
-
-5. **Create Pull Request** on GitHub
-
-### Pull Request Template
-
-```markdown
+[source,markdown]
+----
 ## Description
 Brief description of changes
 
@@ -250,15 +254,16 @@ Brief description of changes
 
 ## Related Issues
 Fixes #(issue)
-```
+----
 
-## Coding Standards
+=== Coding Standards
 
-### Python
+==== Python
 
 Follow PEP 8 and these guidelines:
 
-```python
+[source,python]
+----
 # Good: Clear function with docstring
 def calculate_subnet(network: str, prefix: int) -> List[str]:
     """
@@ -289,13 +294,14 @@ subnet_list = calculate_subnets(network)
 # Bad: Unclear names
 x = validate_ipv6(address)
 l = calculate_subnets(network)
-```
+----
 
-### Go
+==== Go
 
 Follow Go conventions:
 
-```go
+[source,go]
+----
 // Good: Clear function with comment
 // ScanPort scans a single port on the given address.
 // Returns true if port is open, false otherwise.
@@ -312,18 +318,19 @@ if err != nil {
 // Good: Naming
 isOpen := ScanPort(address, port)
 portList := GetOpenPorts(address)
-```
+----
 
-### Documentation
+==== Documentation
 
-- **All public functions** must have docstrings
-- **Include examples** for complex features
-- **Document parameters** and return values
-- **Note exceptions** that may be raised
+* *All public functions* must have docstrings
+* *Include examples* for complex features
+* *Document parameters* and return values
+* *Note exceptions* that may be raised
 
-### Error Handling
+==== Error Handling
 
-```python
+[source,python]
+----
 # Good: Specific error messages
 if not is_valid_ipv6(address):
     raise ValueError(f"Invalid IPv6 address: {address}")
@@ -339,11 +346,11 @@ try:
     result = operation()
 except:  # Don't do this
     pass
-```
+----
 
-## Project Structure
+=== Project Structure
 
-```
+....
 ipv6-only/
 ├── src/
 │   ├── python/          # Python package
@@ -355,47 +362,43 @@ ipv6-only/
 ├── docs/                # Documentation
 ├── examples/            # Usage examples
 └── docker/              # Docker files
-```
+....
 
-### Adding New Features
+==== Adding New Features
 
-1. **Create module** in appropriate directory
-2. **Add tests** in corresponding test directory
-3. **Update __init__.py** to export new functionality
-4. **Add documentation** in docs/
-5. **Add example** in examples/
-6. **Update README** if it's a major feature
+[arabic]
+. *Create module* in appropriate directory
+. *Add tests* in corresponding test directory
+. *Update *init*.py* to export new functionality
+. *Add documentation* in docs/
+. *Add example* in examples/
+. *Update README* if it’s a major feature
 
-## Security
+=== Security
 
-### Reporting Vulnerabilities
+==== Reporting Vulnerabilities
 
-**Do NOT** open public issues for security vulnerabilities.
+*Do NOT* open public issues for security vulnerabilities.
 
 Instead, email: security@ipv6-only.example.com
 
-Include:
-- Description of vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if any)
+Include: - Description of vulnerability - Steps to reproduce - Potential
+impact - Suggested fix (if any)
 
-### Security Guidelines
+==== Security Guidelines
 
-When contributing:
-- Validate all input
-- Handle errors gracefully
-- Don't expose sensitive information
-- Use secure defaults
-- Consider IPv6-specific attacks (NDP spoofing, extension headers, etc.)
+When contributing: - Validate all input - Handle errors gracefully -
+Don’t expose sensitive information - Use secure defaults - Consider
+IPv6-specific attacks (NDP spoofing, extension headers, etc.)
 
-## Performance
+=== Performance
 
-### Benchmarking
+==== Benchmarking
 
 When optimizing:
 
-```bash
+[source,bash]
+----
 # Run benchmarks before changes
 python -m ipv6tools.benchmark -n 10000 > before.txt
 
@@ -406,21 +409,22 @@ python -m ipv6tools.benchmark -n 10000 > after.txt
 
 # Compare results
 diff before.txt after.txt
-```
+----
 
-### Performance Guidelines
+==== Performance Guidelines
 
-- Use generators for large datasets
-- Cache expensive computations
-- Avoid premature optimization
-- Profile before optimizing
-- Document performance characteristics
+* Use generators for large datasets
+* Cache expensive computations
+* Avoid premature optimization
+* Profile before optimizing
+* Document performance characteristics
 
-## Documentation
+=== Documentation
 
-### Code Comments
+==== Code Comments
 
-```python
+[source,python]
+----
 # Good: Explains why, not what
 # Use compressed format for storage efficiency
 address = compress_address(input_addr)
@@ -428,42 +432,42 @@ address = compress_address(input_addr)
 # Bad: States the obvious
 # Compress the address
 address = compress_address(input_addr)
-```
+----
 
-### Updating Docs
+==== Updating Docs
 
 When adding features:
 
-1. Update relevant docs in `docs/`
-2. Add examples in `examples/`
-3. Update README if needed
-4. Update TUTORIAL for user-facing features
+[arabic]
+. Update relevant docs in `+docs/+`
+. Add examples in `+examples/+`
+. Update README if needed
+. Update TUTORIAL for user-facing features
 
-## Community
+=== Community
 
-### Getting Help
+==== Getting Help
 
-- **Documentation**: Check docs/ first
-- **Issues**: Search existing issues
-- **Discussions**: Use GitHub Discussions for questions
-- **IRC**: #ipv6-only on Libera.Chat (if available)
+* *Documentation*: Check docs/ first
+* *Issues*: Search existing issues
+* *Discussions*: Use GitHub Discussions for questions
+* *IRC*: #ipv6-only on Libera.Chat (if available)
 
-### Helping Others
+==== Helping Others
 
-- Answer questions in issues
-- Review pull requests
-- Improve documentation
-- Share examples and use cases
+* Answer questions in issues
+* Review pull requests
+* Improve documentation
+* Share examples and use cases
 
-## License
+=== License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be licensed
+under the MIT License.
 
-## Recognition
+=== Recognition
 
-Contributors will be:
-- Listed in CONTRIBUTORS.md
-- Mentioned in release notes
-- Credited in documentation
+Contributors will be: - Listed in CONTRIBUTORS.md - Mentioned in release
+notes - Credited in documentation
 
 Thank you for contributing to IPv6-Only Tools!
