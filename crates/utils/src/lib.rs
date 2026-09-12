@@ -3,7 +3,7 @@
 //! IPv6 utility functions for address manipulation and generation.
 
 use ipv6_only_core::{IPv6Address, IPv6Network, Ipv6Error, Result};
-use rand::Rng;
+use rand::RngExt;
 use std::net::Ipv6Addr;
 
 /// Compress an IPv6 address to its shortest form.
@@ -33,7 +33,7 @@ pub fn generate_link_local(interface_id: Option<&str>) -> Result<String> {
             })?
         }
         None => {
-            let mut rng = rand::thread_rng();
+            let mut rng = rand::rng();
             let mut bytes = [0u8; 8];
             rng.fill(&mut bytes);
             bytes.to_vec()
@@ -68,7 +68,7 @@ pub fn generate_unique_local(
                 .map_err(|_| Ipv6Error::InvalidAddress("Invalid hex in global ID".to_string()))?
         }
         None => {
-            let mut rng = rand::thread_rng();
+            let mut rng = rand::rng();
             let mut bytes = [0u8; 5];
             rng.fill(&mut bytes);
             bytes.to_vec()
@@ -87,7 +87,7 @@ pub fn generate_unique_local(
                 .map_err(|_| Ipv6Error::InvalidAddress("Invalid hex in subnet ID".to_string()))?
         }
         None => {
-            let mut rng = rand::thread_rng();
+            let mut rng = rand::rng();
             let mut bytes = [0u8; 2];
             rng.fill(&mut bytes);
             bytes.to_vec()
@@ -107,7 +107,7 @@ pub fn generate_unique_local(
             })?
         }
         None => {
-            let mut rng = rand::thread_rng();
+            let mut rng = rand::rng();
             let mut bytes = [0u8; 8];
             rng.fill(&mut bytes);
             bytes.to_vec()
@@ -137,15 +137,15 @@ pub fn generate_random_ipv6(prefix: &str) -> Result<String> {
     let prefix_len = network.prefix_len();
 
     let host_bits = 128 - prefix_len;
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
 
     // Generate random host part
     let random_host: u128 = if host_bits >= 64 {
-        let high: u64 = rng.gen();
-        let low: u64 = rng.gen();
+        let high: u64 = rng.random();
+        let low: u64 = rng.random();
         ((high as u128) << 64) | (low as u128)
     } else {
-        rng.gen::<u128>()
+        rng.random::<u128>()
     };
     let host_mask = if host_bits == 128 {
         u128::MAX
