@@ -463,7 +463,7 @@ When adding features:
 
 - **Discussions**: Use GitHub Discussions for questions
 
-- **IRC**: \#ipv6-only on Libera.Chat (if available)
+- **IRC**: #ipv6-only on Libera.Chat (if available)
 
 ### Helping Others
 
