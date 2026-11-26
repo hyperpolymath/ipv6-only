@@ -1,0 +1,7 @@
+{
+  "name": "ipv6-only",
+  "private": true,
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}
